@@ -62,8 +62,9 @@ export default {
         hero.selected = Math.random() < 0.5;
       }
     },
-    selectHero() {
-      // TODO
+    selectHero({ id, value }) {
+      const heroIndex = this.heroes.findIndex(h => h.id === id);
+      this.heroes[heroIndex].selected = value;
     },
   },
 };

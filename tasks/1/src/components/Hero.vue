@@ -1,13 +1,33 @@
 <template>
   <div class="row">
-    <div>TODO: here be hero</div>
+    <div>
+      <div>{{ data.firstName }}</div>
+      <div>{{ data.lastName }}</div>
+      <div>{{ data.framework }}</div>
+      <div><input type="checkbox" v-model="input" /></div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'hero',
-  // TODO
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    input: {
+      get() {
+        return this.data.selected;
+      },
+      set(value) {
+        this.$emit('select', { id: this.data.id, value });
+      },
+    },
+  },
 };
 </script>
 
