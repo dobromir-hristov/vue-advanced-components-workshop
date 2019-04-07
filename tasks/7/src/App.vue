@@ -1,23 +1,26 @@
 <template>
   <div id="app">
-    <square>TODO: I am square!</square>
-    <button @click="withTheme = !withTheme">
-      With{{ withTheme ? 'out' : '' }} theme
-    </button>
-    <button>
-      TODO: Switch theme
-    </button>
+    <theme-provider :theme="activeTheme" :with-theme="withTheme">
+      <square>I am square!</square>
+
+      <button @click="withTheme = !withTheme">
+        With{{ withTheme ? 'out' : '' }} theme
+      </button>
+      <button @click="chosenTheme = chosenTheme === 0 ? 1 : 0">
+        Switch theme
+      </button>
+    </theme-provider>
   </div>
 </template>
 
 <script>
-// import ThemeProvider from './components/ThemeProvider.vue';
+import ThemeProvider from './components/ThemeProvider.vue';
 import Square from './components/Square.vue';
 
 export default {
   name: 'app',
   components: {
-    // ThemeProvider,
+    ThemeProvider,
     Square,
   },
   data() {
@@ -33,7 +36,13 @@ export default {
         },
       ],
       withTheme: false,
+      chosenTheme: 0,
     };
+  },
+  computed: {
+    activeTheme() {
+      return this.themes[this.chosenTheme];
+    },
   },
 };
 </script>
@@ -44,6 +53,7 @@ button {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
 }
+
 button {
   display: block;
   font-size: 16px;
