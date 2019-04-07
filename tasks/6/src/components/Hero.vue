@@ -1,9 +1,15 @@
 <template>
   <div class="row">
-    <div>{{ data.firstName }}</div>
-    <div>{{ data.lastName }}</div>
-    <div>{{ data.framework }}</div>
-    <div><input type="checkbox" v-model="selected" /></div>
+    <slot :data="data">
+      <div>{{ data.firstName }}</div>
+      <div>{{ data.lastName }}</div>
+      <div>{{ data.framework }}</div>
+    </slot>
+    <div>
+      <slot name="input" :selected="selected" :handler="handler">
+        <input type="checkbox" v-model="selected" />
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -29,6 +35,11 @@ export default {
       this.$emit('select', { id: this.data.id, value });
     },
   },
+  methods: {
+    handler(value) {
+      this.selected = value.target.value;
+    },
+  },
 };
 </script>
 
@@ -39,6 +50,7 @@ export default {
   margin: 10px 0;
   width: 400px;
 }
+
 .row div {
   flex: 1;
 }

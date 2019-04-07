@@ -5,7 +5,15 @@
       :key="hero.id"
       :data="hero"
       @select="selectHero"
-    />
+    >
+      <div slot-scope="{ data }">
+        {{ data.firstName }}
+      </div>
+      <div slot="input" slot-scope="{ handler, selected }">
+        <label> Check the Hero </label>
+        <input :checked="selected" type="checkbox" @change="handler" />
+      </div>
+    </hero>
     <div>{{ selectedHeroes }}</div>
     <button @click="randomSelect">Select random heroes</button>
   </div>
