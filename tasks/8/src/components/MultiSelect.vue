@@ -1,5 +1,5 @@
 <template>
-  <select multiple size="5" v-model="localValue">
+  <select multiple size="5">
     <option v-for="option in options" :key="option.id" :value="option.id">
       {{ option.label }}
     </option>
@@ -7,9 +7,9 @@
 </template>
 
 <script>
-// import $ from 'jquery';
-// import 'select2';
-// import 'select2/dist/css/select2.css';
+import $ from 'jquery';
+import 'select2';
+import 'select2/dist/css/select2.css';
 
 export default {
   name: 'multi-select',
@@ -23,14 +23,22 @@ export default {
       required: true,
     },
   },
-  computed: {
-    localValue: {
-      get() {
-        return this.value;
-      },
-      set(value) {
-        this.$emit('input', value);
-      },
+  mounted () {
+    const selectEl = this.$el;
+    const jqEl = $(selectEl);
+    jqEl.select2({ multiple: true });
+    jqEl.on('change', () => {
+      this.$emit('input', jqEl.val());
+    });
+    this.$once('hook:beforeDestroy', () => {
+      jqEl.select2('destroy');
+    });
+  },
+  watch: {
+    value (newVal, oldVal) {
+      if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+        $(this.$el).val(newVal).trigger('change');
+      }
     },
   },
 };
