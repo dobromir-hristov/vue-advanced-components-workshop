@@ -1,6 +1,18 @@
 <template>
   <div class="container">
-    TODO
+    <header>
+      <slot name="header">
+        here be default header
+      </slot>
+    </header>
+    <div class="content">
+      <slot/>
+    </div>
+    <footer>
+      <slot name="footer">
+        here be default footer
+      </slot>
+    </footer>
   </div>
 </template>
 
@@ -15,17 +27,21 @@ header,
 footer {
   padding: 20px;
 }
+
 header {
   background-color: lightyellow;
 }
+
 footer {
   background-color: lavender;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
+
 .content {
   flex: 1;
   padding: 20px;
